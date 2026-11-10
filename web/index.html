@@ -37,13 +37,22 @@
       </svg>
     </div>
     <div class="catalog-bar">
+      <h2 class="section-heading">Apps</h2>
       <div class="search"><label for="search" class="sr-only">Find an app</label><input id="search" type="search" placeholder="Find an app"></div>
       <p id="app-count" aria-live="polite"></p>
     </div>
     <div id="apps" class="apps"></div>
   </main>
   <section id="stage" aria-label="Active app" hidden>
-    <div class="stage-bar"><button type="button" id="back">‹ All apps</button><strong id="app-name"></strong><span id="app-status" role="status"></span><a id="source" target="_blank" rel="noopener">Source ↗</a></div>
+    <div class="stage-bar">
+      <button type="button" id="back">‹ All apps</button>
+      <strong id="app-name"></strong>
+      <span id="app-status" role="status"></span>
+      <div class="stage-actions">
+        <button type="button" id="focus" aria-pressed="false">Focus app</button>
+        <a id="source" target="_blank" rel="noopener">Source ↗</a>
+      </div>
+    </div>
     <div id="frame"></div>
   </section>
   <p id="notice" role="status" hidden></p>

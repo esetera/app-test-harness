@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict'
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
 import { serve } from '../lib/server.mjs'
+import { catalog } from '../lib/catalog.mjs'
 import { Store, workspacePath } from '../lib/store.mjs'
 
 test('workspace persists binary content and rejects a conflicting save atomically', () => {
@@ -42,6 +43,10 @@ test('browser can load original app bytes, exchange commands, and return activit
   writeFileSync(join(home,'plugin.json'),JSON.stringify({id:'sketch',app:{name:'Fixture',slug:'sketch'}}))
   const html='<p>Original fixture</p>'
   writeFileSync(join(dist,'index.html'),html)
+  const alternate=join(root,'alternate')
+  mkdirSync(alternate)
+  writeFileSync(join(alternate,'index.html'),'<p>Alternate build</p>')
+  assert.equal(catalog(appsRoot,{apps:['sketch'],builds:{sketch:alternate}})[0].root,realpathSync(alternate))
   const server=await serve({port:0,appsRoot,stateDir,apps:['sketch'],labels:{sketch:['Drawing','Draw shapes.']}})
   const {token}=JSON.parse(readFileSync(join(stateDir,'server.json'),'utf8'))
   const browser='test-browser'

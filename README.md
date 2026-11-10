@@ -4,7 +4,7 @@ A local test harness for using open-source desktop apps in the built-in browsers
 
 ## Run locally
 
-You need Node.js 22.13 or later and built apps. On macOS, the folder in the example comes from an existing desktop install. On other setups, point `appsRoot` at a folder containing each built app's `plugin.json` and its static entry point. The source repositories are linked below. The harness uses the builds you provide, so source checkouts need to be built upstream first.
+You need Node.js 22.13 or later and built apps. On macOS, the folder in the example comes from an existing desktop install. On other setups, point `appsRoot` at a folder containing each built app's `plugin.json` and its static entry point. The source repositories are linked below. The harness uses the builds you provide, so source checkouts need to be built upstream first. To use an alternate build of one app, set `builds` to an object mapping its folder ID to the absolute directory containing its built `index.html`. The manifest still comes from `appsRoot`.
 
 Clone this repository and create a `harness.config.json` in its root. The app IDs select folders and the labels only change the launcher.
 
@@ -49,7 +49,7 @@ node cli.mjs start
 
 Open the printed address, usually `http://127.0.0.1:54916/`. Use **Workspace files** inside an open app to import and download test files. Documents, preferences, and activity live in the harness's own SQLite workspace under `.state/`. Set `HARNESS_STATE` before starting both the server and the agent to use a different workspace.
 
-If you have a local app theme export, set `themePath` to its JSON file in your config. The harness passes the export's `light` theme to the app through its host bridge.
+The harness applies a compact light theme through the app bridge and uses one neutral header above the app’s own controls. If you have a local app theme export, set `themePath` to its JSON file in your config. The harness passes the export's `light` theme to the app through its host bridge.
 
 ## Open it in your agent
 
@@ -58,7 +58,7 @@ If you have a local app theme export, set `themePath` to its JSON file in your c
 
 ## Work in both directions
 
-1. Open an app. Ask your agent to run `harness_tools` to discover the tools available in the current screen. It can call them through `harness_call`. A tool flagged for approval prompts in the browser before running. The original app shows the result.
+1. Open an app. Use **Focus app** to give it the entire harness pane. Ask your agent to run `harness_tools` to discover the tools available in the current screen. It can call them through `harness_call`. A tool flagged for approval prompts in the browser before running. The original app shows the result.
 2. Open **Agent activity** beside the app. Use **Send** to queue a request for your agent. Requests sent from a supported app’s own agent controls, app saves, context updates, and tool completions also appear here. The feed captures events the app reports through the bridge. For a click or other UI change that produces no event, the agent can inspect the browser.
 3. Ask your agent to watch the activity feed. It reads `harness_activity`, passes `nextCursor` back as `after`, and can wait up to 20 seconds for new activity in each call. It can send a response through `harness_reply`. Requests remain available in the browser's recent log if the agent stops watching. Sending a request does not start an idle chat or wake a closed agent.
 4. If both desktop browsers are open, use the **Browser connection** ID from the intended tab. The app, activity, and reply go to that tab.

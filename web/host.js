@@ -85,17 +85,18 @@ function showStage(tab) {
   $('app-status').textContent=tab.handshake?'Connected':'Connecting…'
   history.replaceState(null,'','?app='+encodeURIComponent(tab.app.id))
 }
+function setFocus(active) {
+  document.body.classList.toggle('focus-app',active)
+  $('focus').setAttribute('aria-pressed',String(active))
+  $('focus').textContent=active?'Exit focus':'Focus app'
+  if (active && $('agent-dialog').open) $('agent-dialog').close()
+}
 function showCatalog() {
+  setFocus(false)
   $('stage').hidden=true
   $('catalog').hidden=false
   history.replaceState(null,'','/')
 }
-function setResource(tab,path) {
-  tab.resource=path?{path,name:path.split('/').at(-1),kind:'file'}:null
-  event(tab,'viewport.changed',viewport(tab))
-  if (tab.resource) event(tab,'resource.open',tab.resource)
-}
-
 async function approve(tab,name,args) {
   const dialog=$('approval')
   $('approval-message').textContent=name+' in '+tab.app.name
@@ -224,7 +225,7 @@ const local={
   },
   'workspace.updateCurrentTab':()=>({ok:true,updated:true}),
   'workspace.closeReady':tab=>{tab.onClose?.();return {ok:true}},
-  'workspace.goHome':tab=>{setResource(tab,null);return {ok:true}},
+  'workspace.goHome':()=>{showCatalog();return {ok:true}},
   'dialog.openFile':(tab,options)=>choose(tab,'open',options),
   'dialog.openImage':tab=>choose(tab,'open',{title:'Choose an image',filters:[{extensions:['png','jpg','jpeg','gif','webp','svg']}]}),
   'dialog.openFolder':(tab,options)=>choose(tab,'folder',options),
@@ -382,6 +383,7 @@ async function start() {
   renderApps()
   $('search').oninput=renderApps
   $('home').onclick=$('back').onclick=showCatalog
+  $('focus').onclick=()=>setFocus(!document.body.classList.contains('focus-app'))
   $('connection').onclick=()=> $('agent-dialog').open ? $('agent-dialog').close() : showActivity()
   $('agent-request').onsubmit=async event=>{
     event.preventDefault()

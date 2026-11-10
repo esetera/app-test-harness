@@ -51,7 +51,7 @@ async function start(options) {
   }
   if (options.foreground) {
     const {serve}=await import('./lib/server.mjs')
-    const server=await serve({port,appsRoot:resolve(appsRoot),stateDir,themePath:process.env.HARNESS_THEME ?? config.themePath,apps:config.apps,labels:config.labels,sourceBase})
+    const server=await serve({port,appsRoot:resolve(appsRoot),stateDir,themePath:process.env.HARNESS_THEME ?? config.themePath,apps:config.apps,labels:config.labels,builds:config.builds,sourceBase})
     console.log(server.origin)
     for (const signal of ['SIGTERM','SIGINT']) process.once(signal,()=>server.close().finally(()=>process.exit(0)))
     return
