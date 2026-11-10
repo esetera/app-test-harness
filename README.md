@@ -4,7 +4,7 @@ A local test harness for using open-source desktop apps in the built-in browsers
 
 ## Run locally
 
-You need Node.js 22.13 or later and built apps. On macOS, the folder in the example comes from an existing desktop install. On other setups, point `appsRoot` at a folder containing each built app's `plugin.json` and its static entry point. The source repositories are linked below. The harness uses the builds you provide, so source checkouts need to be built upstream first. To use an alternate build of one app, set `builds` to an object mapping its folder ID to the absolute directory containing its built `index.html`. The manifest still comes from `appsRoot`.
+You need Node.js 22.13 or later and built apps. On macOS, the folder in the example comes from an existing desktop install. On other setups, point `appsRoot` at a folder containing each built app's `plugin.json` and its static entry point. The source repositories are linked below. The harness uses the builds you provide, so source checkouts need to be built upstream first. To use an alternate build of one app, set `builds` to an object mapping its folder ID to the absolute directory containing its built `index.html`. The manifest still comes from `appsRoot`. If an installed spreadsheet build leaves its grid blank, try rebuilding the unchanged upstream source for a modern browser. In local testing, `vite build --target esnext --minify=false` restored the grid and formula editing. Point `builds` at that output.
 
 Clone this repository and create a `harness.config.json` in its root. The app IDs select folders and the labels only change the launcher.
 
