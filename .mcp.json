@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "harness": {
+      "command": "node",
+      "args": ["mcp.mjs"]
+    }
+  }
+}

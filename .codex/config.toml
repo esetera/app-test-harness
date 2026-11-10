@@ -1,0 +1,4 @@
+[mcp_servers.harness]
+command = "node"
+args = ["mcp.mjs"]
+tool_timeout_sec = 50

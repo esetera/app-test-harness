@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "App Test Harness",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["cli.mjs", "start", "--foreground"],
+      "port": 54916
+    }
+  ]
+}

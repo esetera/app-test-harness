@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>App Test Harness</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/host.js"></script>
+</head>
+<body>
+  <header>
+    <button type="button" id="home" aria-label="App catalog"><span class="mark" aria-hidden="true"><svg viewBox="0 0 28 28"><path d="M4 23 14 4l10 19M7 17h14M2 23h24M14 2v24"/></svg></span><span>App Test Harness</span></button>
+    <div class="top-actions">
+      <button type="button" id="files">Workspace files</button>
+      <button type="button" id="connection" aria-haspopup="dialog" aria-controls="agent-dialog">Agent activity</button>
+    </div>
+  </header>
+  <main id="catalog">
+    <div class="intro">
+      <div>
+        <p class="eyebrow"><span>01</span> &nbsp; WORKSPACE PLAN</p>
+        <h1>Open an app</h1>
+        <p>Use an app in this browser. Let your agent inspect it, run its tools, or respond to work you send.</p>
+      </div>
+      <svg class="plan" viewBox="0 0 322 156" aria-hidden="true">
+        <g class="guides"><path d="M19 15h283M24 124h271M44 7v134M266 6v135M23 47h268M23 87h268M112 22v105M205 20v110"/>
+          <path d="m37 130 13-12m209 12 13-12M40 14l8 8m214-8 8 8M21 43l8 8m-8 32 8 8M280 43l8 8m-8 32 8 8"/>
+        </g>
+        <g class="walls"><path d="M45 30l219-1 2 82-220 1zM50 35l210-1 1 72-210 2zM111 35l1 39m-5-39 1 40m4 20v12m-5-12v12m99-72v23m-5-23v23m4 22v26m-5-26v26"/>
+          <path d="M46 72l62 1m4 0h55m19 0h15m5 1h54M50 77h57m6 0h54m19 0h14m6 1h54"/>
+        </g>
+        <g class="guides"><path d="M110 74v20m0-20a20 20 0 0 1 20 20m72-36h-20m20 0a20 20 0 0 0-20 20m-15-4v-18m0 0a18 18 0 0 1 18 18"/>
+          <path d="M58 45h30v20H58zM216 40h34v25h-34zM217 86h33v13h-33zM60 86h36m-36 5h36m-36 5h36M60 101h36"/>
+          <circle cx="283" cy="104" r="8"/><path d="M283 92v25m-12-13h24"/>
+        </g>
+        <text x="45" y="148">FIG. A</text><text x="266" y="148" text-anchor="end">APP LAYOUT</text>
+      </svg>
+    </div>
+    <div class="catalog-bar">
+      <div class="search"><label for="search" class="sr-only">Find an app</label><input id="search" type="search" placeholder="Find an app"></div>
+      <p id="app-count" aria-live="polite"></p>
+    </div>
+    <div id="apps" class="apps"></div>
+  </main>
+  <section id="stage" aria-label="Active app" hidden>
+    <div class="stage-bar"><button type="button" id="back">‹ All apps</button><strong id="app-name"></strong><span id="app-status" role="status"></span><a id="source" target="_blank" rel="noopener">Source ↗</a></div>
+    <div id="frame"></div>
+  </section>
+  <p id="notice" role="status" hidden></p>
+  <dialog id="agent-dialog" aria-labelledby="activity-title">
+    <header class="dialog-header">
+      <div><p class="eyebrow"><span>02</span> &nbsp; ACTIVITY LOG</p><h2 id="activity-title">Agent activity</h2></div>
+      <form method="dialog"><button aria-label="Close agent activity">Close</button></form>
+    </header>
+    <p class="dialog-intro">Send a request and read the reply here. An agent must be running and watching this browser.</p>
+    <details class="connection-details">
+      <summary>Browser connection</summary>
+      <p>Browser ID <output id="browser-id"></output></p>
+      <p id="tool-summary"></p>
+    </details>
+    <ol id="activity-log" aria-label="Recent activity" aria-live="polite"></ol>
+    <p id="activity-empty">No activity yet.</p>
+    <form id="agent-request">
+      <label for="agent-message">Message to your agent</label>
+      <textarea id="agent-message" maxlength="4000" rows="3" required placeholder="Ask the agent to do something in this app"></textarea>
+      <div class="dialog-actions"><span id="request-status" role="status"></span><button class="primary" type="submit">Send</button></div>
+    </form>
+  </dialog>
+  <dialog id="approval" aria-labelledby="approval-title">
+    <form method="dialog">
+      <p class="eyebrow">AGENT ACTION</p>
+      <h2 id="approval-title">Allow this app tool?</h2>
+      <p id="approval-message"></p>
+      <pre id="approval-args"></pre>
+      <div class="dialog-actions"><button value="deny">Decline</button><button class="primary" value="allow">Allow</button></div>
+    </form>
+  </dialog>
+  <dialog id="picker">
+    <form method="dialog">
+      <h2 id="picker-title">Workspace files</h2>
+      <p id="picker-path"></p>
+      <div id="picker-list"></div>
+      <label id="filename-label" hidden>File name <input id="filename" name="filename" autocomplete="off"></label>
+      <div class="picker-actions">
+        <label class="file-import">Import files <input id="import" type="file" multiple></label>
+        <button id="pick-confirm" value="confirm">Choose</button>
+        <button value="cancel" formnovalidate>Cancel</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
