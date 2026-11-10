@@ -53,8 +53,8 @@ The harness applies a compact light theme through the app bridge and uses one ne
 
 ## Open it in your agent
 
-- **Codex Desktop.** Open this checkout as a trusted local project. Ask `@Browser` to open the address above or enter it in the built-in browser. The project's `.codex/config.toml` declares the `harness` MCP server. Start a new chat in this project if you just added it. [Codex browser and computer use](https://developers.openai.com/training/walkthroughs/using-your-computer-and-browser) · [Codex MCP setup](https://developers.openai.com/codex/mcp/)
-- **Claude Code Desktop.** Open a local session in this checkout. Use **Browser** in the toolbar and enter the same address, or choose **App Test Harness** from the development servers to start it from the included launch configuration. Approve the project-scoped `harness` MCP server when Claude Code asks. [Claude Code Desktop](https://code.claude.com/docs/en/desktop)
+- **Codex Desktop.** Open this checkout as a trusted local project. Ask `@Browser` to open the address above or enter it in the built-in browser. The project's `.codex/config.toml` registers the `harness` MCP server and automatically approves its tools in this project. Start a new chat to pick up the config. [Codex browser and computer use](https://developers.openai.com/training/walkthroughs/using-your-computer-and-browser) · [Codex MCP setup](https://developers.openai.com/codex/mcp/)
+- **Claude Code Desktop.** Open a local session in this checkout and trust the folder when prompted. The project's `.claude/settings.json` enables the `harness` MCP server and automatically approves its tools in this project. Use **Browser** in the toolbar and enter the same address, or choose **App Test Harness** from the development servers to start it from the included launch configuration. [Claude Code Desktop](https://code.claude.com/docs/en/desktop)
 
 ## Work in both directions
 

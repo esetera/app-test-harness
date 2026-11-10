@@ -1,0 +1,6 @@
+{
+  "enabledMcpjsonServers": ["harness"],
+  "permissions": {
+    "allow": ["mcp__harness__*"]
+  }
+}
